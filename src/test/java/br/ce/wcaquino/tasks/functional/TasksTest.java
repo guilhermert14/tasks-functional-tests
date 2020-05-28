@@ -7,12 +7,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class TasksTest {
+
 
     public WebDriver acessarAplicacao() throws MalformedURLException {
         System.setProperty("webdriver.chrome.driver", "chromedriver");
@@ -26,14 +29,14 @@ public class TasksTest {
     }
 
     @Test
-    public void deveSalvarTarefaComSucesso() throws MalformedURLException {
+    public void deveSalvarTarefaComSucesso() throws Exception {
         WebDriver driver = acessarAplicacao();
         try {
             driver.findElement(By.id("addTodo")).click();
             driver.findElement(By.id("task")).sendKeys("Teste via Selenium");
             driver.findElement(By.id("dueDate")).sendKeys("10/10/2030");
             driver.findElement(By.id("saveButton")).click();
-
+            Thread.sleep(2000);
             String message = driver.findElement(By.id("message")).getText();
             Assert.assertEquals("Success!", message);
         }finally {
@@ -48,7 +51,6 @@ public class TasksTest {
             driver.findElement(By.id("addTodo")).click();
             driver.findElement(By.id("dueDate")).sendKeys("10/10/2030");
             driver.findElement(By.id("saveButton")).click();
-
             String message = driver.findElement(By.id("message")).getText();
             Assert.assertEquals("Fill the task description", message);
         }finally {
@@ -63,7 +65,6 @@ public class TasksTest {
             driver.findElement(By.id("addTodo")).click();
             driver.findElement(By.id("task")).sendKeys("Teste via Selenium");
             driver.findElement(By.id("saveButton")).click();
-
             String message = driver.findElement(By.id("message")).getText();
             Assert.assertEquals("Fill the due date", message);
         }finally {
